@@ -13,12 +13,12 @@
   <h3>Turn Timer</h3>
   <p>
     <button ion-button color="primary" menuToggle>Join Existing Game</button>
-    <button ion-button color="primary" (click)="newGameAlert()">Create New Game</button>
+    <button ion-button color="secondary" (click)="newGameAlert()">Create New Game</button>
 
   </p>
-  <p>
-    {{name}}
-    {{color}}
-  </p>
+  <h1>Have fun playing <h1 class="highlight toggle">{{gameName}}</h1></h1>
+  <h2>Number of players: <h1 class="highlight toggle">{{number_of_players}}</h1></h2>
+  <p></p>
+  <h3>Your Game Id is: <h1 class="highlight toggle">{{randomId}}</h1></h3>
 
 </ion-content>
