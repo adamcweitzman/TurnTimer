@@ -21,6 +21,10 @@ export class HelloIonicPage {
   private ref: any;
   private gameRef: any;
   private joinGame: FirebaseListObservable<any>;
+  private playerArray: any;
+  private firstName: any;
+  private initials: any;
+
 
 
 
@@ -31,8 +35,16 @@ export class HelloIonicPage {
     // this.gameRef.on('join_game_alert');
 	}
 
+  combinePlayerName(firstName, initials): string {
+    console.log(initials);
+    let lastLetter = initials.slice(1);
+
+    return firstName + lastLetter;
+  }
+
    newGameAlert(): void {
    	this.randomId = Math.floor(Math.random() * 500);
+    this.playerArray = ["player1"];
    	let prompt = this.alertCtrl.create({
   		title: 'New Game Form',
   		message: 'Enter game details below',
@@ -42,7 +54,7 @@ export class HelloIonicPage {
 	  			name: 'gameName',
 	  			placeholder: 'game name'
 	  		},
-			{
+			  {
 	  			name: 'number_of_players',
 	  			placeholder: 'number of players'
 	  		},
@@ -62,12 +74,16 @@ export class HelloIonicPage {
   				text: 'Save',
   				handler: data => 
   				{
+            this.admin = data.admin;
+            this.firstName = data.your_name;
+
   					this.game.push({
   						game_name: data.gameName,
   						number_of_players: data.number_of_players,
-  						randomId: this.randomId,
+  						random_id: this.randomId,
   						admin: data.admin,
-  						first_name: data.your_name
+  						first_name: data.your_name,
+              player_array: this.combinePlayerName(this.firstName, this.admin)
   					})
   					this.gameName = data.gameName;
   					this.number_of_players = data.number_of_players;
@@ -124,6 +140,9 @@ export class HelloIonicPage {
 
     // console.log(game)
   }
+
+
+
 
 
 }
