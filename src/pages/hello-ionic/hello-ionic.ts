@@ -131,9 +131,10 @@ export class HelloIonicPage {
           text: 'Save',
           handler: data => 
           {
-            this.af.database.object('/games/' + data.gameId).update({
-               player_array: [this.combinePlayerName(data.firstName, data.initials)]
-            });
+            // this.af.database.list('/games/' + data.gameId + '/player_array').push({
+            //    player_array: [this.combinePlayerName(data.firstName, data.initials)]
+            // });
+            this.af.database.list('/games/' + data.gameId + '/player_array').push(this.combinePlayerName(data.firstName, data.initials), data.firstName);
           } 
         }
       ]
