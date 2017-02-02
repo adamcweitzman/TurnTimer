@@ -6,6 +6,8 @@ import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ListPage } from '../pages/list/list';
 import { CreateNewGamePage } from '../pages/create-new-game/create-new-game';
 import { AngularFireModule } from 'angularfire2';
+import { GameRoomPage } from '../pages/game-room/game-room';
+
 
 export const firebaseConfig = {
     apiKey: "AIzaSyARdmAPS_y9DIzcoHeveQi4uV65Ue-DLBk",
@@ -21,7 +23,8 @@ export const firebaseConfig = {
     HelloIonicPage,
     ItemDetailsPage,
     ListPage,
-    CreateNewGamePage
+    CreateNewGamePage,
+    GameRoomPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -33,7 +36,8 @@ export const firebaseConfig = {
     HelloIonicPage,
     ItemDetailsPage,
     ListPage,
-    CreateNewGamePage
+    CreateNewGamePage,
+    GameRoomPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
