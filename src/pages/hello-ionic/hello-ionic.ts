@@ -24,13 +24,15 @@ export class HelloIonicPage {
   private playerArray: any;
   private firstName: any;
   private initials: any;
+  private af: any;
 
 
 
 
 	constructor(public navCtrl: NavController, public alertCtrl: AlertController, af: AngularFire) {
 		this.game = af.database.list('/games');
-    // this.db = firebase.database().ref('/');
+    this.af = af;
+    //this.db = firebase.database().ref('/');
     // this.gameRef = firebase.database().ref ('games');
     // this.gameRef.on('join_game_alert');
 	}
@@ -40,6 +42,15 @@ export class HelloIonicPage {
     let lastLetter = initials.slice(1);
 
     return firstName + lastLetter;
+  }
+
+    getGameById(af: AngularFire, id): FirebaseListObservable<string[]>{
+    return af.database.list('games', {
+      query: {
+          orderByChild: 'username',
+          equalTo: id
+      }
+    })
   }
 
    newGameAlert(): void {
@@ -77,14 +88,14 @@ export class HelloIonicPage {
             this.admin = data.admin;
             this.firstName = data.your_name;
 
-  					this.game.push({
-  						game_name: data.gameName,
-  						number_of_players: data.number_of_players,
-  						random_id: this.randomId,
-  						admin: data.admin,
-  						first_name: data.your_name,
-              player_array: this.combinePlayerName(this.firstName, this.admin)
-  					})
+            this.af.database.object("games/"+this.randomId).set({
+                  game_name: data.gameName,
+                  number_of_players: data.number_of_players,
+                  random_id: this.randomId,
+                  admin: data.admin,
+                  first_name: data.your_name,
+                  player_array: [this.combinePlayerName(this.firstName, this.admin)]
+             });
   					this.gameName = data.gameName;
   					this.number_of_players = data.number_of_players;
   				} 
@@ -95,7 +106,7 @@ export class HelloIonicPage {
   	prompt.present();
   } 
 
-  joinGameAlert(af): void {
+  joinGameAlert(): void {
      let prompt = this.alertCtrl.create({
       title: 'Join Game',
       message: 'Enter game details below',
@@ -120,11 +131,10 @@ export class HelloIonicPage {
           text: 'Save',
           handler: data => 
           {
-            this.game.push({
-              first_name: data.firstName,
-              initials: data.initials,
-              gameId: data.gameId
-            })
+            // this.af.database.list('/games/' + data.gameId + '/player_array').push({
+            //    player_array: [this.combinePlayerName(data.firstName, data.initials)]
+            // });
+            this.af.database.list('/games/' + data.gameId + '/player_array').push(this.combinePlayerName(data.firstName, data.initials), data.firstName);
           } 
         }
       ]
@@ -140,9 +150,5 @@ export class HelloIonicPage {
 
     // console.log(game)
   }
-
-
-
-
 
 }
