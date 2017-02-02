@@ -2,6 +2,8 @@ import { Component, Injectable  } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { CreateNewGamePage } from '../create-new-game/create-new-game';
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
+import { GameRoomPage } from '../game-room/game-room';
+
 
 
 @Component({
@@ -149,6 +151,7 @@ export class HelloIonicPage {
    //  })
 
     // console.log(game)
+    this.navCtrl.setRoot(GameRoomPage);
   }
 
 }
